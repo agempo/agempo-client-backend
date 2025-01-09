@@ -4,11 +4,36 @@ info:
   description: Agempo Client API
   version: 1.0.0
 tags:
+  - name: login
+    description: Autenticação e autorização do cliente
   - name: cliente
     description: clientes do Agempo
   - name: estabelecimento
     description: Estabelecimentos disponiveis para o cliente
 paths:
+  /login:
+    post:
+      tags:
+        - login
+      summary: realizar login
+      description: realixar login com email e senha
+      operationId: loginCliente
+      requestBody:
+        description: realiza a autenticação de um cliente
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'          
+        '401':
+          description: Unauthorized
   /cliente:
     post:
       tags:
@@ -160,6 +185,17 @@ paths:
             - read:pets
 components:
   schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          format: "user@email.com"
+          example: "user@email.com"
+        senha:
+          type: string
+          format: "password"
+          example: "password"
     Order:
       type: object
       properties:
