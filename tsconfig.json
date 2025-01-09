@@ -1,8 +1,8 @@
-{ 
-  "compilerOptions" : { 
-    "module": "CommonJS",
+{
+  "compilerOptions": {
+    "module": "commonjs",
     "moduleResolution": "node",
-    "target": "ES2017",
+    "target": "es2017",
     "sourceMap": true,
     "pretty": true,
     "allowJs": false,
@@ -14,19 +14,19 @@
     "removeComments": true,
     "listFiles": false,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": ["node","jest"],
     "outDir": "dist/agempo-client-backend",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["./"]
+      "@/*": ["./*"]
     },
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*", "openapi/api.yaml"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "__test__/**/*"]
 }

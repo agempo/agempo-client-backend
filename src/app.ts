@@ -7,6 +7,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import routes from 'router/routes';
 import cookieParser from 'cookie-parser';
+import { validarToken } from 'middleware/security';
 
 export const createApp = (): express.Application => {
     const contexto = CONFIG.APP.CONTEXTO as string;
@@ -17,10 +18,13 @@ export const createApp = (): express.Application => {
     app.use(express.json());
     app.use(cookieParser());
     app.use(express.urlencoded({ extended: true }));
+    
+    
+    const swaggerDocument = configuraSwagger(`agempo-client-backend/api/v1`);
     app.use(
         `/${contexto}/swagger-ui.html`,
-        swaggerUI.serveFiles(configuraSwagger(`${contexto}/api/v1`)),
-        swaggerUI.setup()
+        swaggerUI.serve,
+        swaggerUI.setup(swaggerDocument)
     );
     app.use(
         helmet({
@@ -34,6 +38,8 @@ export const createApp = (): express.Application => {
             },
         })
     );
+
+    app.use(validarToken)
     app.use(morgan("combined"))
     app.use(`/${contexto}/api/v1`, routes);
 
