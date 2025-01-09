@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Cliente Backend - Agempo 1.0
-  description: Agempo Client API
+  description: API para gestão do lado do cliente no sistema Agempo
   version: 1.0.0
 tags:
   - name: login
@@ -10,6 +10,12 @@ tags:
     description: clientes do Agempo
   - name: estabelecimento
     description: Estabelecimentos disponiveis para o cliente
+  - name: plano
+    description: Planos para contratação
+  - name: assinatura
+    description: Gestão de assinaturas
+servers:
+  - url: /api/v1/
 paths:
   /login:
     post:
@@ -31,7 +37,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Login'          
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "jwt"
         '401':
           description: Unauthorized
   /cliente:
@@ -183,6 +193,32 @@ paths:
         - petstore_auth:
             - write:pets
             - read:pets
+  /estabelecimento:
+    get:
+      tags:
+        - estabelecimento
+      summary: Lista os estabelecimentos disponiveis para o cliente
+      description: Lista os estabelecimentos
+      operationId: getEstabelecimentos
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+      security:
+        - api_key: []
+        - petstore_auth:
+            - write:pets
+            - read:pets    
 components:
   schemas:
     Login:
