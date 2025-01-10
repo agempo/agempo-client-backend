@@ -3,6 +3,7 @@ import { iCliente } from "@/models/iCliente";
 import { z, ZodError } from 'zod'
 import bcrypt from 'bcryptjs';
 import BusinessError from "@/error/BusinessError";
+import { PERFIL } from "@/types/iRoles";
 
 const clienteSchema = z.object({
     nome: z.string().min(1, "Nome é obrigatório"),
@@ -38,9 +39,9 @@ class ClienteService {
 
             const hashedPassword = await bcrypt.hash(cliente.senha, 10);
             cliente.senha = hashedPassword;
+            cliente.roles = PERFIL.USUARIO;
             
             const clienteBD = await clienteRepository.cadastrarClienteBD(cliente)
-
             return clienteBD;
         } catch (error) {
             if (error instanceof ZodError) {

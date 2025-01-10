@@ -6,4 +6,5 @@ export interface iCliente {
     senha: string
     cpf: string
     dataNascimento: Date
+    roles: string[]
 }

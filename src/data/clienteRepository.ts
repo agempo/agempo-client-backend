@@ -4,11 +4,11 @@ import client from './sql-client';
 class ClienteRepository {
     
     async cadastrarClienteBD(cliente: iCliente): Promise<iCliente> {
-        const query: string = `insert into cliente (nome, sobrenome, email, senha, cpf, dataNascimento) 
-                               values ($1, $2, $3, $4, $5, $6) 
+        const query: string = `insert into cliente (nome, sobrenome, email, senha, cpf, dataNascimento, roles) 
+                               values ($1, $2, $3, $4, $5, $6, $7) 
                                returning clienteid, nome, sobrenome, email, cpf, dataNascimento`;
     
-        const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.dataNascimento];
+        const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.dataNascimento, cliente.roles];
         
         const resultado = await client.executarComandoSql<any>(query, parametros);
         
