@@ -15,16 +15,16 @@ const CONFIG ={
         ENV: process.env.NODE_ENV? process.env.NODE_ENV: 'LOCAL',
         CONTEXTO: process.env.APP
     },
-    AUTH: {
-        PRIVATE_KEY: process.env.PRIVATE_KEY || 'undefined'
-    },
     DATABASE: {
         DB_USER: process.env.DB_USER,
         DB_HOST: process.env.DB_HOST,
         DB_NAME: process.env.DB_NAME,
         DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
         DB_PORT: process.env.DB_PORT,
-    }
+    },
+    AUTH: {
+        PRIVATE_KEY: process.env.PRIVATE_KEY || 'undefined',
+    },
 }
 
 export default CONFIG;

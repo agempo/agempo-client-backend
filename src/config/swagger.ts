@@ -12,4 +12,4 @@ export function configuraSwagger(url: string){
     }
 
     return swaggerDocument
-}
+} 

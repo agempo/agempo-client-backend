@@ -20,7 +20,7 @@ export const createApp = (): express.Application => {
     app.use(express.urlencoded({ extended: true }));
     
     
-    const swaggerDocument = configuraSwagger(`agempo-client-backend/api/v1`);
+    const swaggerDocument = configuraSwagger(`/${contexto}/api/v1`);
     app.use(
         `/${contexto}/swagger-ui.html`,
         swaggerUI.serve,

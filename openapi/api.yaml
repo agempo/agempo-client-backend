@@ -56,28 +56,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components/schemas/clienteRequest'
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
+                $ref: '#/components/schemas/clienteResponse'          
         '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+          description: Cliente inválido
+
     get:
       tags:
         - cliente
@@ -232,36 +222,56 @@ components:
           type: string
           format: "password"
           example: "password"
-    Order:
+    clienteRequest:
       type: object
       properties:
-        id:
+        nome:
+          type: string
+          format: string
+          example: "nome"
+        sobrenome:
+          type: string
+          format: string
+          example: "sobrenome"
+        email:
+          type: string
+          format: string
+          example: "user@email.com"
+        senha:
+          type: string
+          format: string
+          example: "password"
+        cpf:
+          type: string
+          example: "cpf"
+        dataNascimento:
+          type: string
+          format: date
+    clienteResponse:
+      type: object
+      properties:
+        clienteId:
           type: integer
           format: int64
-          example: 10
-        petId:
-          type: integer
-          format: int64
-          example: 198772
-        quantity:
-          type: integer
-          format: int32
-          example: 7
-        shipDate:
+          example: 1
+        nome:
           type: string
-          format: date-time
-        status:
+          format: string
+          example: "nome"
+        sobrenome:
           type: string
-          description: Order Status
-          example: approved
-          enum:
-            - placed
-            - approved
-            - delivered
-        complete:
-          type: boolean
-      xml:
-        name: order
+          format: string
+          example: "sobrenome"
+        email:
+          type: string
+          format: string
+          example: "user@email.com"
+        cpf:
+          type: string
+          example: "cpf"
+        dataNascimento:
+          type: string
+          format: date
     Customer:
       type: object
       properties:

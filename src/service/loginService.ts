@@ -1,17 +1,18 @@
 import clienteRepository from "data/clienteRepository";
-import { iCliente } from "types/iCliente";
 import { iLoginRequest } from "types/iLogin";
 import jwt from 'jsonwebtoken';
 import CONFIG from "config";
 import bcrypt from 'bcryptjs';
 import LoginError from "@/error/LoginError";
+import { iCliente } from "@/models/iCliente";
 
 class LoginService {
 
-    realizarLogin = async (data: iLoginRequest) =>{
+    realizarLoginService = async (data: iLoginRequest) => {
         const email: string = data.email;
 
-        const cliente: iCliente| undefined = await clienteRepository.buscarClientePorEmail(email);
+        const cliente: iCliente| undefined = await clienteRepository.buscarClientePorEmailBD(email);
+
 
         if(!cliente){
             throw new LoginError("E-mail ou senha inválidos!")
@@ -21,7 +22,7 @@ class LoginService {
             throw new LoginError("E-mail ou senha inválidos!")
         }
 
-        const token = jwt.sign(
+        const token = jwt.sign( 
             { user: JSON.stringify(cliente.clienteId) },
             CONFIG.AUTH.PRIVATE_KEY,
             { expiresIn: '120m' }

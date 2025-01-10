@@ -3,9 +3,13 @@ import logger from 'config/logger';
 import { Request, NextFunction, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-export const validarToken: any = (_req: Request, _res: Response, _next: NextFunction) => {
-    if(_req.path === "/api/v1/login"){
-        logger.debug("Rota liberada")
+const urlBase: string = `/${CONFIG.APP.CONTEXTO}/api/v1`
+
+export const validarToken: any = (_req: Request, _res: Response, _next: NextFunction) => {   
+    const rotaLiberada: boolean =  _req.path === `${urlBase}/login` || (_req.path === `${urlBase}/cliente` && _req.method === 'POST')
+    
+    if (rotaLiberada) {
+        logger.debug("Rota liberada");
         return _next();
     }
     

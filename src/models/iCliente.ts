@@ -1,6 +1,5 @@
-
-export type iCliente  = {
-    clienteId: number
+export interface iCliente {
+    clienteId?: number
     nome: string 
     sobrenome: string 
     email: string 

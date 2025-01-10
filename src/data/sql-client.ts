@@ -2,7 +2,7 @@ import getConnection from 'config/configdb';
 import logger from 'config/logger';
 
 class postgresSQLHelper {
-  async excutarComandoSql<Type>(comando: string, parametros?: any): Promise<Awaited<Type>> {
+  async executarComandoSql<Type>(comando: string, parametros?: any): Promise<Awaited<Type>> {
     const client = await getConnection();
     try {
       const res = await client.query(comando, parametros);
