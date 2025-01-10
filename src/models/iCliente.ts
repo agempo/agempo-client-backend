@@ -1,3 +1,5 @@
+import { ROLES } from "@/types/iRoles"
+
 export interface iCliente {
     clienteId?: number
     nome: string 
@@ -6,5 +8,5 @@ export interface iCliente {
     senha: string
     cpf: string
     dataNascimento: Date
-    roles: string[]
+    role: ROLES
 }

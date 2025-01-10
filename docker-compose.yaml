@@ -2,14 +2,16 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: agempo-client-bd
-    image: postgres
-    ports:
-      - 5432:5432
+    image: postgres:latest
+    container_name: agempo_client_bd
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: docker
-      POSTGRES_DB: agempo
-      PGDATA: /data/postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: agempoclientbd
+    ports:
+      - "5432:5432"
     volumes:
-      - ./data/pg:/data/postgres
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+volumes:
+  postgres_data:

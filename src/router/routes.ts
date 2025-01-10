@@ -1,11 +1,14 @@
 import ClienteController from "@/controller/ClienteController";
-import LoginController from "@/controller/loginController";
+import loginController from "@/controller/LoginController";
 import { Router } from "express";
 
 const router = Router()
 
-router.post("/login", LoginController.realizarLogin);
+router.post("/login", loginController.realizarLogin);
 
 router.post("/cliente", ClienteController.cadastrarCliente)
+
+//TODO: validar a role do usuario para liberar a rota
+router.get("/cliente", ClienteController.listarClientes);
 
 export default router;

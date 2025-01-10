@@ -15,7 +15,7 @@ export const validarToken: any = (_req: Request, _res: Response, _next: NextFunc
     
     logger.debug(`Validando token JWT`)
 
-    const token = _req.headers['authorization']?.split(' ')[1];
+    const token = _req.headers.authorization
     if(!token) return _res.status(401).json({ message: "Token Ausente" })
 
     try {

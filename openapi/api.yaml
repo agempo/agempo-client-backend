@@ -16,6 +16,8 @@ tags:
     description: Gestão de assinaturas
 servers:
   - url: /api/v1/
+security:
+  - JWT: []
 paths:
   /login:
     post:
@@ -24,6 +26,7 @@ paths:
       summary: realizar login
       description: realixar login com email e senha
       operationId: loginCliente
+      security: []  
       requestBody:
         description: realiza a autenticação de um cliente
         content:
@@ -51,6 +54,7 @@ paths:
       summary: Adicionar novo cliente
       description: Adicionar novo cliente
       operationId: addCliente
+      security: []  
       requestBody:
         description: Cria novo cliente no Agempo
         content:
@@ -90,10 +94,6 @@ paths:
                   $ref: '#/components/schemas/Pet'
         '400':
           description: Invalid status value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
   /cliente/{clienteId}:
     get:
       tags:
@@ -210,6 +210,11 @@ paths:
             - write:pets
             - read:pets
 components:
+  securitySchemes:
+    JWT: 
+      type: apiKey
+      in: header
+      name: authorization
   schemas:
     Login:
       type: object
@@ -430,16 +435,3 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/User'
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header

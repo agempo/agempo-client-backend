@@ -32,6 +32,16 @@ class ClienteController {
             return res.status(500).json({ message: "Internal Server Error" });
         }
     }
+
+    async listarClientes(_req: Request, res: Response): Promise<any>{
+        try {
+            const listaClientes = await clienteService.listarClientesService();
+            
+            return res.status(200).json(listaClientes);
+        } catch (error) {
+            return res.status(500).json({ message: 'Internal Server Error' })
+        }
+    }
 }
 
 export default new ClienteController()
