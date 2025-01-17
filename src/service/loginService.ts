@@ -23,7 +23,10 @@ class LoginService {
         }
 
         const token = jwt.sign( 
-            { user: JSON.stringify(cliente.clienteId) },
+            { 
+                user: JSON.stringify(cliente.clienteId),
+                role: String(cliente.role)
+            },
             CONFIG.AUTH.PRIVATE_KEY,
             { expiresIn: '120m' }
         )

@@ -78,6 +78,13 @@ paths:
       summary: lista clientes do Agempo
       description: Multiple status values can be provided with comma separated strings
       operationId: findPetsByStatus
+      parameters:
+        - name: listarTodos
+          in: query
+          description: listar clientes inativos
+          required: true
+          schema:
+            type: boolean
       responses:
         '200':
           description: successful operation
@@ -86,14 +93,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid status value
+                  $ref: '#/components/schemas/clienteResponse'          
   /cliente/{clienteId}:
     get:
       tags:
@@ -104,7 +104,7 @@ paths:
       parameters:
         - name: clienteId
           in: path
-          description: ID of pet to return
+          description: Id do cliente
           required: true
           schema:
             type: integer
@@ -115,19 +115,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid ID supplied
+                $ref: '#/components/schemas/clienteResponse'          
         '404':
-          description: Pet not found
-      security:
-        - api_key: []
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          description: Cliente not found
     put:
       tags:
         - cliente
@@ -137,22 +127,16 @@ paths:
       parameters:
         - name: clienteId
           in: path
-          description: name that need to be deleted
+          description: Id do cliente
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         description: Update an existent user in the store
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/clienteRequest'
       responses:
         default:
           description: successful operation
@@ -163,15 +147,9 @@ paths:
       description: delete a pet
       operationId: deletePet
       parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
         - name: clienteId
           in: path
-          description: Pet id to delete
+          description: Cliente id to delete
           required: true
           schema:
             type: integer
@@ -179,10 +157,6 @@ paths:
       responses:
         '400':
           description: Invalid pet value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
   /estabelecimento:
     get:
       tags:
@@ -204,11 +178,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Pet not found
-      security:
-        - api_key: []
-        - petstore_auth:
-            - write:pets
-            - read:pets
 components:
   securitySchemes:
     JWT: 

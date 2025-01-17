@@ -1,4 +1,4 @@
-class BusinessError extends Error {
+class NotFoundError extends Error {
     constructor(message: string) {
       super(message); 
       Error.captureStackTrace(this, this.constructor); 
@@ -8,9 +8,9 @@ class BusinessError extends Error {
     }
   
     statusCode(): number {
-      return 400; 
+      return 404; 
     }
   }
   
-  export default BusinessError; 
+  export default NotFoundError; 
   
