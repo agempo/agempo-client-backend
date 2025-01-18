@@ -10,8 +10,8 @@ tags:
     description: clientes do Agempo
   - name: estabelecimento
     description: Estabelecimentos disponiveis para o cliente
-  - name: plano
-    description: Planos para contratação
+  - name: agendamento
+    description: Agendamento de serviços
   - name: assinatura
     description: Gestão de assinaturas
 servers:
@@ -161,8 +161,8 @@ paths:
     get:
       tags:
         - estabelecimento
-      summary: Lista os estabelecimentos disponiveis para o cliente
-      description: Lista os estabelecimentos
+      summary: Lista os estabelecimentos disponíveis para o cliente
+      description: Lista os estabelecimentos disponíveis para o cliente
       operationId: getEstabelecimentos
       responses:
         '200':
@@ -172,13 +172,37 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/estabelecimento'          
+                  $ref: '#/components/schemas/estabelecimento'      
+  /estabelecimento/{estabelecimentoId}:
+    get:
+      tags:
+        - estabelecimento
+      summary: Lista os estabelecimentos disponíveis para o cliente
+      description: Lista os estabelecimentos disponíveis para o cliente
+      operationId: getEstabelecimentoPorId
+      parameters:
+      - name: estabelecimentoId
+        in: path
+        description: Cliente id to delete
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/estabelecimento'     
   /estabelecimento/{estabelecimentoId}/servicos:
     get:
       tags:
         - estabelecimento
-      summary: Lista os estabelecimentos disponiveis para o cliente
-      description: Lista os estabelecimentos
+      summary: Lista os serviços do estabelecimento
+      description: Lista os serviços do estabelecimento
       operationId: getServicosPorEstabelecimento
       parameters:
         - name: estabelecimentoId
@@ -202,8 +226,8 @@ paths:
     get:
       tags:
         - estabelecimento
-      summary: Lista os estabelecimentos disponiveis para o cliente
-      description: Lista os estabelecimentos
+      summary: Lista os profissionais de um determinado serviço daquele estabelecimento
+      description: Lista os profissionais de um determinado serviço daquele estabelecimento
       operationId: getProfissionaisPorEstabelecimento
       parameters:
         - name: estabelecimentoId
@@ -227,8 +251,8 @@ paths:
     get:
       tags:
         - estabelecimento
-      summary: Lista os estabelecimentos disponiveis para o cliente
-      description: Lista os estabelecimentos
+      summary: Lista os horários disponíveis de um certo profissional e serviço
+      description: Lista os horarios disponíveis de um certo profissional e serviço
       operationId: getHorariosPorEstabelecimentoProfissional
       parameters:
         - name: estabelecimentoId
@@ -264,8 +288,8 @@ paths:
     get:
       tags:
         - estabelecimento
-      summary: Lista os estabelecimentos disponiveis para o cliente
-      description: Lista os estabelecimentos
+      summary: Lista os horários disponíveis de um serviço
+      description: Lista os horários disponíveis de um serviço
       operationId: getHorariosPorEstabelecimento
       parameters:
         - name: estabelecimentoId
@@ -291,6 +315,66 @@ paths:
                   $ref: '#/components/schemas/horario'          
         '400':
           description: Id inválidos
+  /agendamento:
+    post:
+      tags:
+        - agendamento
+      summary: Agenda um horário para o cliente
+      description: Agenda um horário para o cliente
+      operationId: agendarServico
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/agendamentoRequest'
+        required: true
+      responses:
+        '201':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/agendamentoResponse'
+        '400':
+          description: Agendamento inválido
+    get:
+      tags:
+        - agendamento
+      summary: Lista os agendamentos do cliente
+      description: Lista os agendamentos do cliente
+      operationId: listarAgendamentos
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/agendamentoResponse'
+  /agendamento/{agendamentoId}:
+    get:
+      tags:
+        - agendamento
+      summary: Lista os agendamentos do cliente
+      description: Lista os agendamentos do cliente
+      operationId: listarAgendamentoPorId
+      parameters:
+      - name: agendamentoId
+        in: path
+        description: Id do agendamento
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/agendamentoResponse'
+        '404':
+          description: Agendamento não encontrado
 components:
   securitySchemes:
     JWT: 
@@ -421,7 +505,7 @@ components:
         data:
           type: string
           format: date
-          example: 2004-20-12
+          example: 2004-12-20
         horario_inicio:
           type: string
           format: time
@@ -430,3 +514,45 @@ components:
           type: string
           format: time
           example: 21:30
+    agendamentoRequest: 
+      type: object
+      properties:
+        estabelecimentoId:
+          type: integer
+          format: int64
+          example: 1
+        servicoId:
+          type: integer
+          format: int64
+          example: 1
+        horario:
+          type: string
+          format: time
+          example: 20:30
+        profissionalId:
+          type: integer
+          format: int64
+          example: 1
+    agendamentoResponse: 
+      type: object
+      properties:
+        agendamentoId:
+          type: integer
+          format: int64
+          example: 1
+        horario:
+          type: string
+          format: time
+          example: 20:30
+        profissionalId:
+          type: integer
+          format: int64
+          example: 1
+        qrCode:
+          type: string
+          format: string
+        status:
+          type: string
+          enum:
+            - pendente
+            - realizado
