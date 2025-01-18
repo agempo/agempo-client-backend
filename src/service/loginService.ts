@@ -24,7 +24,7 @@ class LoginService {
 
         const token = jwt.sign( 
             { 
-                user: JSON.stringify(cliente.clienteId),
+                clienteId: Number(cliente.clienteid),
                 role: String(cliente.role)
             },
             CONFIG.AUTH.PRIVATE_KEY,

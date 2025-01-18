@@ -11,7 +11,7 @@ tags:
   - name: estabelecimento
     description: Estabelecimentos disponiveis para o cliente
   - name: agendamento
-    description: Agendamento de serviços
+    description: Agendamento de servicos
   - name: assinatura
     description: Gestão de assinaturas
 servers:
@@ -329,7 +329,7 @@ paths:
               $ref: '#/components/schemas/agendamentoRequest'
         required: true
       responses:
-        '201':
+        '200':
           description: sucesso
           content:
             application/json:
@@ -415,13 +415,13 @@ components:
         cpf:
           type: string
           example: "cpf"
-        data_nascimento:
+        dataNascimento:
           type: string
           format: date
     clienteResponse:
       type: object
       properties:
-        cliente_id:
+        clienteId:
           type: integer
           format: int64
           example: 1
@@ -440,21 +440,21 @@ components:
         cpf:
           type: string
           example: "cpf"
-        data_nascimento:
+        dataNascimento:
           type: string
           format: date
     estabelecimento:
       type: object
       properties:
-        estabelecimento_id:
+        estabelecimentoId:
           type: integer
           format: int64
           example: 1
-        nome_estabelecimento:
+        nomeEstabelecimento:
           type: string
           format: string
           example: "nome"
-        descricao_estabelecimento:
+        descricaoEstabelecimento:
           type: string
           format: string
           example: "descrição"
@@ -465,26 +465,26 @@ components:
     servico: 
       type: object
       properties:
-        servico_id:
+        servicoId:
           type: integer
           format: int64
           example: 1
-        nome_servico:
+        nomeServico:
           type: string
           format: string
           example: "nome"
-        descricao_servico:
+        descricaoServico:
           type: string
           format: string
           example: "descrição"
     profissional: 
       type: object
       properties:
-        profissional_id:
+        profissionalId:
           type: integer
           format: int64
           example: 1
-        nome_profissional:
+        nomeProfissional:
           type: string
           format: string
           example: "nome"
@@ -506,17 +506,21 @@ components:
           type: string
           format: date
           example: 2004-12-20
-        horario_inicio:
+        horarioInicio:
           type: string
           format: time
           example: 20:30
-        horario_fim:
+        horarioFinal:
           type: string
           format: time
           example: 21:30
     agendamentoRequest: 
       type: object
       properties:
+        clienteId: 
+          type: integer
+          format: int64
+          example: 1
         estabelecimentoId:
           type: integer
           format: int64
@@ -536,11 +540,23 @@ components:
     agendamentoResponse: 
       type: object
       properties:
+        clienteId: 
+          type: integer
+          format: int64
+          example: 1
         agendamentoId:
           type: integer
           format: int64
           example: 1
+        estabelecimentoId:
+          type: integer
+          format: int64
+          example: 1
         horario:
+          type: string
+          format: time
+          example: 20:30
+        servicoId:
           type: string
           format: time
           example: 20:30
@@ -551,7 +567,7 @@ components:
         qrCode:
           type: string
           format: string
-        status:
+        statusServico:
           type: string
           enum:
             - pendente

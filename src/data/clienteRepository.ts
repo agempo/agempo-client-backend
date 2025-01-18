@@ -9,7 +9,7 @@ class ClienteRepository {
             values ($1, $2, $3, $4, $5, $6, $7, $8) 
             returning clienteid, nome, sobrenome, email, cpf, dataNascimento`;
             
-            const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.dataNascimento, cliente.role, true];
+            const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.datanascimento, cliente.role, true];
             
             const resultado = await client.executarComandoSql<any>(query, parametros);
             
@@ -90,7 +90,7 @@ class ClienteRepository {
                 datanascimento = $6 
             where clienteid = $7`
 
-            const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.dataNascimento, clienteId];
+            const parametros = [cliente.nome, cliente.sobrenome, cliente.email, cliente.senha, cliente.cpf, cliente.datanascimento, clienteId];
             await client.executarComandoSql<any>(query, parametros);
         } catch (error) {
             console.error('Ocorreu um erro ao efetuar operacao no banco de dados.')

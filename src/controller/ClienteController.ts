@@ -2,12 +2,9 @@ import BusinessError from "@/error/BusinessError";
 import NotFoundError from "@/error/NotFoundError";
 import { iCliente } from "@/models/iCliente";
 import clienteService from "@/service/clienteService";
+import { erroGenerico } from "@/utils/errorResponse";
 import { Request, Response } from "express";
 import { ZodError } from "zod";
-
-const erroGenerico = (res: Response) => {
-    res.status(500).json({ message: 'Internal Server Error' });
-}
 
 class ClienteController {
 

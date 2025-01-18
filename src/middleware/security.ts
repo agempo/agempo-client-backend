@@ -6,7 +6,16 @@ import jwt from 'jsonwebtoken';
 
 const urlBase: string = `/${CONFIG.APP.CONTEXTO}/api/v1`
 
-export const validarToken: any = (_req: Request, _res: Response, _next: NextFunction) => {   
+declare global {
+    namespace Express {
+      interface Request {
+        usuario: number;  
+      }
+    }
+  }
+  
+
+export const validarToken: any = (_req: any, _res: any, _next: NextFunction) => {   
     const rotaLiberada: boolean =  _req.path === `${urlBase}/login` || (_req.path === `${urlBase}/cliente` && _req.method === 'POST')
     
     if (rotaLiberada) {
@@ -27,6 +36,10 @@ export const validarToken: any = (_req: Request, _res: Response, _next: NextFunc
         logger.error(`Erro ao validar token JWT ${jwt}`)
         return _res.status(403).json({ error: 'Erro ao verificar o token' })
     }
+
+        
+    const { clienteId } = jwt.verify(token, CONFIG.AUTH.PRIVATE_KEY) as { clienteId: number };
+    _req.usuario = clienteId;
 
     logger.debug(`JWT validado com sucesso`)
     return _next()

@@ -1,12 +1,12 @@
 import { ROLES } from "@/types/iRoles"
 
 export interface iCliente {
-    clienteId?: number
+    clienteid?: number
     nome: string 
     sobrenome: string 
     email: string 
     senha: string
     cpf: string
-    dataNascimento: Date
+    datanascimento: Date
     role: ROLES
 }
