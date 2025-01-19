@@ -1,6 +1,8 @@
 import AgendamentoController from "@/controller/AgendamentoController";
+import AssinaturaController from "@/controller/AssinaturaController";
 import ClienteController from "@/controller/ClienteController";
 import LoginController from "@/controller/LoginController";
+import PlanoController from "@/controller/PlanoController";
 import { validarAdmin } from "@/middleware/security";
 import { Router } from "express";
 
@@ -15,5 +17,12 @@ router.put("/cliente/:clienteId", validarAdmin, ClienteController.alterarCliente
 router.delete("/cliente/:clienteId", validarAdmin, ClienteController.deletarCliente);
 
 router.post("/agendamento", AgendamentoController.agendarServico);
+router.get("/agendamento", AgendamentoController.listarAgendamentos);
+router.get("/agendamento/:agendamentoId", AgendamentoController.buscarAgendamentoPorId);
+
+router.post("/assinatura/assinar", AssinaturaController.realizarAssinatura);
+router.get("/assinatura/consultar", AssinaturaController.consultarAssinatura);
+
+router.get("/planos", PlanoController.listarPlanos)
 
 export default router;

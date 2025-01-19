@@ -9,4 +9,6 @@ export interface iCliente {
     cpf: string
     datanascimento: Date
     role: ROLES
+    assinaturaId?: number
+    ativo: boolean
 }

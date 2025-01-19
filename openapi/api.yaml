@@ -14,6 +14,8 @@ tags:
     description: Agendamento de servicos
   - name: assinatura
     description: Gestão de assinaturas
+  - name: plano
+    description: Gestão dos planos da Agempo
 servers:
   - url: /api/v1/
 security:
@@ -340,9 +342,9 @@ paths:
     get:
       tags:
         - agendamento
-      summary: Lista os agendamentos do cliente
-      description: Lista os agendamentos do cliente
-      operationId: listarAgendamentos
+      summary: Lista todos agendamentos do cliente
+      description: Lista todos agendamentos do cliente
+      operationId: listarTodosAgendamentos
       responses:
         '200':
           description: sucesso
@@ -356,8 +358,8 @@ paths:
     get:
       tags:
         - agendamento
-      summary: Lista os agendamentos do cliente
-      description: Lista os agendamentos do cliente
+      summary: Busca agendamento por id
+      description: Busca agendamento por id
       operationId: listarAgendamentoPorId
       parameters:
       - name: agendamentoId
@@ -373,6 +375,69 @@ paths:
             application/json:
               schema:
                   $ref: '#/components/schemas/agendamentoResponse'
+        '404':
+          description: Agendamento não encontrado
+  /assinatura/assinar:
+    post:
+      tags:
+        - assinatura
+      summary: Realiza assinatura do cliente
+      description: Realiza assinatura do cliente
+      operationId: efetuarAssinatura
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planoId: 
+                  type: integer
+                  format: int64
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/assinaturaResponse'
+        '400':
+          description: Assinatura invalida
+  /assinatura/consultar:
+    get:
+      tags:
+        - assinatura
+      summary: Consulta assinatura do cliente
+      description: Consulta assinatura do cliente
+      operationId: consultaAssinatura
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/assinaturaResponse'
+        '404':
+          description: Assinatura não encontrada
+
+  /planos:
+    get:
+      tags:
+        - plano
+      summary: Lista os planos disponiveis para assinatura
+      description: Lista os planos disponiveis para assinatura
+      operationId: listaPlanos
+      security: []  
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/plano'
         '404':
           description: Agendamento não encontrado
 components:
@@ -415,7 +480,7 @@ components:
         cpf:
           type: string
           example: "cpf"
-        dataNascimento:
+        datanascimento:
           type: string
           format: date
     clienteResponse:
@@ -440,7 +505,7 @@ components:
         cpf:
           type: string
           example: "cpf"
-        dataNascimento:
+        datanascimento:
           type: string
           format: date
     estabelecimento:
@@ -458,6 +523,10 @@ components:
           type: string
           format: string
           example: "descrição"
+        plano:
+          type: string  
+          format: string
+          example: 'GOLD'
         contato:
           type: string
           format: string
@@ -481,6 +550,10 @@ components:
       type: object
       properties:
         profissionalId:
+          type: integer
+          format: int64
+          example: 1
+        estabeleciumentoId:
           type: integer
           format: int64
           example: 1
@@ -508,8 +581,8 @@ components:
           example: 2004-12-20
         horarioInicio:
           type: string
-          format: time
-          example: 20:30
+          format: datetime
+          example: "2025-01-18T20:30:00.000Z"
         horarioFinal:
           type: string
           format: time
@@ -532,7 +605,7 @@ components:
         horario:
           type: string
           format: time
-          example: 20:30
+          example: "2025-01-18T20:30:00.000Z"
         profissionalId:
           type: integer
           format: int64
@@ -567,8 +640,52 @@ components:
         qrCode:
           type: string
           format: string
-        statusServico:
+        hashCode:
           type: string
-          enum:
-            - pendente
-            - realizado
+          format: string 
+        servicoRealizado:
+          type: boolean
+          format: boolean
+          example: false
+        pagamentoRealizado:
+          type: boolean
+          format: boolean
+          example: false
+    assinaturaResponse:
+      type: object
+      properties:
+        assinaturaId: 
+          type: integer
+          format: int64
+          example: 1
+        cpfcliente:
+          type: string
+          format: string
+          example: string
+        plano:
+          type: string
+          format: string 
+          example: 1
+        preco:
+          type: number
+          format: number
+        ativa:
+          type: boolean
+          format: boolean
+        datarenovacao:
+          type: string
+          format: date
+    plano: 
+      type: object
+      properties:
+        planoId: 
+          type: integer
+          format: int64
+          example: 1
+        descricao:
+          type: string
+          format: string
+          example: string
+        preco:
+          type: number
+          format: number

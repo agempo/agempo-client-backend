@@ -25,6 +25,9 @@ const CONFIG ={
     AUTH: {
         PRIVATE_KEY: process.env.PRIVATE_KEY || 'undefined',
     },
+    AGEMPO_BUSINESS_API: {
+        BASE_URL: process.env.AGEMPO_BUSINESS_URL
+    }
 }
 
 export default CONFIG;

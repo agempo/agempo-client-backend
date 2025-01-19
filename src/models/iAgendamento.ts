@@ -1,12 +1,13 @@
-import { StatusEnum } from "@/types/iAgendamento";
 
 export interface iAgendamento {
     agendamentoid?: number,
     clienteid: number,
     estabelecimentoid: number,
-    horario: string,
+    horario: Date,
     servicoid: number,
     profissionalid: number,
-    qrcode: string,
-    statusservico: StatusEnum
+    qrcode?: string,
+    hashCode?: string,
+    servicoRealizado: boolean
+    pagamentoRealizado: boolean
 }

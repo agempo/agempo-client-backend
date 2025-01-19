@@ -16,7 +16,7 @@ declare global {
   
 
 export const validarToken: any = (_req: any, _res: any, _next: NextFunction) => {   
-    const rotaLiberada: boolean =  _req.path === `${urlBase}/login` || (_req.path === `${urlBase}/cliente` && _req.method === 'POST')
+    const rotaLiberada: boolean =  _req.path === `${urlBase}/login` || (_req.path === `${urlBase}/cliente` && _req.method === 'POST') ||  (_req.path === `${urlBase}/planos` && _req.method === 'GET'); 
     
     if (rotaLiberada) {
         logger.debug("Rota liberada");

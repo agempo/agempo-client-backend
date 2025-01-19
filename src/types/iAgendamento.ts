@@ -4,8 +4,3 @@ export type iAgendamentoRequest = {
     horario: Date,
     profissionalId: number
 }
-
-export enum StatusEnum {
-    "pendente" = "pendente", 
-    "realizado" = "realizado"
-}
